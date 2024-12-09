@@ -74,6 +74,7 @@ export default function NavbarComponent() {
             "data-[active=true]:after:bg-primary",
           ],
         }}
+        maxWidth="xl"
       >
         <NavbarBrand as={Link} href={"/"}>
           <Image alt="navigation logo" src={NavLogo} />
