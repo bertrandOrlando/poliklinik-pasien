@@ -7,7 +7,7 @@ import Image from "next/image";
 import CardDokter, { CardDokterProps } from "@/components/CardDokter";
 
 import axios from "axios";
-import AxiosInstance from "@/utils/axiosInstance";
+import AxiosInstance from "@/utils/AxiosInstance";
 
 export const SearchIcon = (props: { className: string }) => {
   return (
