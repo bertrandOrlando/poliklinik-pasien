@@ -4,7 +4,7 @@ import { Button, Link } from "@nextui-org/react";
 export type CardDokterProps = {
   id_dokter: number;
   nama: string;
-  spesialisasi: string;
+  nama_spesialisasi: string;
   url: string;
   jadwal: {
     id_jadwal: number;
@@ -15,7 +15,7 @@ export type CardDokterProps = {
 };
 
 export default function CardDokter(props: CardDokterProps) {
-  const dokterUrl = props.id_dokter + props.nama.split(" ").join("_");
+  const dokterUrl = props.id_dokter + "-" + props.nama.split(" ").join("-");
 
   return (
     <div className="flex flex-col justify-between rounded-md px-10 py-6 shadow-md">
@@ -29,7 +29,7 @@ export default function CardDokter(props: CardDokterProps) {
         />
         <div className="flex flex-col">
           <p className="font-bold">{props.nama}</p>
-          <p className="text-[#B3B3B3]">Spesialis {props.spesialisasi}</p>
+          <p className="text-[#B3B3B3]">Spesialis {props.nama_spesialisasi}</p>
         </div>
       </div>
       <hr />
