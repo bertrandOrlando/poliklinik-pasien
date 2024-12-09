@@ -8,6 +8,7 @@ import HospitalRoom from "@/public/HospitalRoom.jpg";
 import CheckRoom from "@/public/CheckRoom.jpg";
 import HospitalDorm from "@/public/HospitalDorm.jpg";
 import ProfileLogo from "@/public/ProfileLogo.png";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -30,12 +31,12 @@ export default function Home() {
               Menghubungkan kesehatan Indonesia melalui jaringan klinik
               terstandarisasi
             </p>
-            <a
-              href="/Register"
+            <Link
+              href="/daftar"
               className="inline-block rounded-lg bg-primaryCol px-8 py-3 text-white transition hover:bg-secondaryCol"
             >
               Daftar Sekarang
-            </a>
+            </Link>
           </div>
         </div>
       </div>
