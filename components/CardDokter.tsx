@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Button, Link } from "@nextui-org/react";
 
 export type CardDokterProps = {
-  id_dokter: number;
+  id_pegawai: number;
   nama: string;
   nama_spesialisasi: string;
   url: string;
@@ -15,7 +15,7 @@ export type CardDokterProps = {
 };
 
 export default function CardDokter(props: CardDokterProps) {
-  const dokterUrl = props.id_dokter + "-" + props.nama.split(" ").join("-");
+  const dokterUrl = props.id_pegawai + "-" + props.nama.split(" ").join("-");
 
   return (
     <div className="flex flex-col justify-between rounded-md px-10 py-6 shadow-md">
