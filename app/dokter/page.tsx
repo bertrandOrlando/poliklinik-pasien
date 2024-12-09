@@ -1,10 +1,13 @@
 "use client";
 
 import { Input } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import SearchIcon from "@/public/SearchIcon.svg";
 import Image from "next/image";
-import CardDokter from "@/components/CardDokter";
+import CardDokter, { CardDokterProps } from "@/components/CardDokter";
+
+import axios from "axios";
+import AxiosInstance from "@/utils/axiosInstance";
 
 export const SearchIcon = (props: { className: string }) => {
   return (
@@ -27,48 +30,64 @@ export const SearchIcon = (props: { className: string }) => {
   );
 };
 
-const jadwalDokter = [
-  {
-    id_dokter: "1",
-    nama: "Dr. Andi Susanto",
-    spesialisasi: "Dokter Umum",
-    url: "../public/placeholder.svg",
-    jadwal: ["09:00 - 12:00", "13:00 - 16:00", "10:00 - 14:00"],
-  },
-  {
-    id_dokter: "2",
-    nama: "Dr. Siti Aminah",
-    spesialisasi: "Dokter Gigi",
-    url: "../public/placeholder.svg",
-    jadwal: ["10:00 - 12:00", "14:00 - 17:00"],
-  },
-  {
-    id_dokter: "3",
-    nama: "Dr. Budi Santoso",
-    spesialisasi: "Dokter Spesialis Anak",
-    url: "../public/placeholder.svg",
-    jadwal: [
-      "08:00 - 11:00",
-      "09:00 - 12:00",
-      "10:00 - 13:00",
-      "08:00 - 11:00",
-      "09:00 - 12:00",
-      "10:00 - 13:00",
-    ],
-  },
-  {
-    id_dokter: "3",
-    nama: "Dr. Budi Santoso",
-    spesialisasi: "Dokter Spesialis Anak",
-    url: "../public/placeholder.svg",
-    jadwal: ["08:00 - 11:00", "09:00 - 12:00", "10:00 - 13:00"],
-  },
-];
+// const jadwalDokter = [
+//   {
+//     id_dokter: "1",
+//     nama: "Dr. Andi Susanto",
+//     spesialisasi: "Dokter Umum",
+//     url: "../public/placeholder.svg",
+//     jadwal: ["09:00 - 12:00", "13:00 - 16:00", "10:00 - 14:00"],
+//   },
+//   {
+//     id_dokter: "2",
+//     nama: "Dr. Siti Aminah",
+//     spesialisasi: "Dokter Gigi",
+//     url: "../public/placeholder.svg",
+//     jadwal: ["10:00 - 12:00", "14:00 - 17:00"],
+//   },
+//   {
+//     id_dokter: "3",
+//     nama: "Dr. Budi Santoso",
+//     spesialisasi: "Dokter Spesialis Anak",
+//     url: "../public/placeholder.svg",
+//     jadwal: [
+//       "08:00 - 11:00",
+//       "09:00 - 12:00",
+//       "10:00 - 13:00",
+//       "08:00 - 11:00",
+//       "09:00 - 12:00",
+//       "10:00 - 13:00",
+//     ],
+//   },
+//   {
+//     id_dokter: "3",
+//     nama: "Dr. Budi Santoso",
+//     spesialisasi: "Dokter Spesialis Anak",
+//     url: "../public/placeholder.svg",
+//     jadwal: ["08:00 - 11:00", "09:00 - 12:00", "10:00 - 13:00"],
+//   },
+// ];
 
 export default function DokterPage() {
-  const [filter, setFilter] = useState<string>("");
+  // const data = await fetch("http://localhost:5000/api/pegawai/dokter");
+  // const jadwal = await data.json();
+  const [jadwal, setJadwal] = useState<CardDokterProps[]>([]);
 
-  console.log(filter);
+  useEffect(() => {
+    const getData = async () => {
+      AxiosInstance.get("/api/jadwal-praktik").then((response) => {
+        console.log(response);
+        setJadwal(response.data);
+      });
+    };
+
+    getData();
+  }, []);
+  // console.log(jadwal);
+
+  // const [filter, setFilter] = useState<string>("");
+  // const [data, setData] = useState<CardDokterProps[]>();
+
   return (
     <>
       <div className="px-32 py-10">
@@ -81,15 +100,16 @@ export default function DokterPage() {
             type="text"
             className="max-w-96 text-primaryCol"
             isClearable
-            onClear={() => setFilter("")}
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            // onClear={() => setFilter("")}
+            // value={filter}
+            // onChange={(e) => setFilter(e.target.value)}
           />
           <h4 className="text-primaryCol">Search By Filter</h4>
         </div>
         <div className="grid grid-cols-2 gap-10 py-10">
-          {jadwalDokter.map((jadwal, index) => {
-            return <CardDokter {...jadwal} key={index} />;
+          {jadwal.map((item: CardDokterProps, index: number) => {
+            if (item.jadwal.length > 0)
+              return <CardDokter {...item} key={index} />;
           })}
         </div>
       </div>

@@ -1,22 +1,21 @@
 import Image from "next/image";
-import React from "react";
-import Placeholder from "@/public/placeholder.svg";
 import { Button, Link } from "@nextui-org/react";
-import axios from "axios";
 
-type CardDokterProps = {
-  id_dokter: string;
+export type CardDokterProps = {
+  id_dokter: number;
   nama: string;
   spesialisasi: string;
   url: string;
-  jadwal: string[];
+  jadwal: {
+    id_jadwal: number;
+    hari: string;
+    start_time: string;
+    end_time: string;
+  }[];
 };
 
-export default async function CardDokter(props: CardDokterProps) {
-  const data = await axios.get("localhost:5000/pegawai/dokter");
-  console.log(data);
-
-  const dokterUrl = props.nama.split(" ").join("_");
+export default function CardDokter(props: CardDokterProps) {
+  const dokterUrl = props.id_dokter + props.nama.split(" ").join("_");
 
   return (
     <div className="flex flex-col justify-between rounded-md px-10 py-6 shadow-md">
@@ -38,7 +37,9 @@ export default async function CardDokter(props: CardDokterProps) {
         <span>Jadwal Besok: </span>
         <div>
           {props.jadwal.map((item, index) => (
-            <p key={index}>{item}</p>
+            <p key={index}>
+              {item.start_time} - {item.end_time}
+            </p>
           ))}
         </div>
       </div>
