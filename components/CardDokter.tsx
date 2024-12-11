@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button, Link } from "@nextui-org/react";
 import { useDayName } from "@/utils/useDayName";
 import Placeholder from "@/public/placeholder-profile.png";
+import { useTimeFormatter } from "@/utils/useTimeFormatter";
 
 export type CardDokterProps = {
   id_pegawai: number;
@@ -21,6 +22,8 @@ export default function CardDokter(props: CardDokterProps) {
 
   const dayName = useDayName();
   const tomorrow = dayName.getTomorrowDay();
+
+  const timeFormatter = useTimeFormatter();
 
   return (
     <div className="flex flex-col justify-between rounded-md px-10 py-6 shadow-md">
@@ -47,7 +50,7 @@ export default function CardDokter(props: CardDokterProps) {
             if (item.hari.toLowerCase() === tomorrow.toLowerCase())
               return (
                 <p key={index}>
-                  {item.start_time} - {item.end_time}
+                  {timeFormatter.formatTime(item.start_time, item.end_time)}
                 </p>
               );
           })}
