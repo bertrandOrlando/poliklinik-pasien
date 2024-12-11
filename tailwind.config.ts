@@ -13,7 +13,7 @@ const config: Config = {
       colors: {
         primaryCol: "#1AB1E5",
         secondaryCol: "#046E89",
-        tertiaryCol: "#DCDCDC",
+        tertiaryCol: "#B3B3B3",
         "status-pemanggilan": "#F59E0B",
         "status-pemeriksaan": "#3BC354",
         "status-pembayaran": "#FF0004",
