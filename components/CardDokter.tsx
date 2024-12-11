@@ -56,9 +56,9 @@ export default function CardDokter(props: CardDokterProps) {
       <Button
         as={Link}
         href={`dokter/${dokterUrl}`}
-        className="w-full bg-primaryCol text-white"
+        className="w-full bg-primaryCol font-medium text-white"
       >
-        Daftar
+        Lihat Jadwal Dokter / Buat Janji Temu
       </Button>
     </div>
   );
