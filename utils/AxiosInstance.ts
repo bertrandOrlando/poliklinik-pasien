@@ -9,10 +9,7 @@ AxiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
-      const accessToken = JSON.parse(token);
-      if (accessToken) {
-        if (config.headers) config.headers.token = accessToken;
-      }
+      if (config.headers) config.headers.Authorization = "Bearer " + token;
     }
     return config;
   },
