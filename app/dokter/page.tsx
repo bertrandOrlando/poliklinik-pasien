@@ -1,12 +1,9 @@
 "use client";
 
 import { Input } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
-// import SearchIcon from "@/public/SearchIcon.svg";
-import Image from "next/image";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import CardDokter, { CardDokterProps } from "@/components/CardDokter";
 
-import axios from "axios";
 import AxiosInstance from "@/utils/AxiosInstance";
 
 export const SearchIcon = (props: { className: string }) => {
@@ -30,63 +27,30 @@ export const SearchIcon = (props: { className: string }) => {
   );
 };
 
-// const jadwalDokter = [
-//   {
-//     id_dokter: "1",
-//     nama: "Dr. Andi Susanto",
-//     spesialisasi: "Dokter Umum",
-//     url: "../public/placeholder.svg",
-//     jadwal: ["09:00 - 12:00", "13:00 - 16:00", "10:00 - 14:00"],
-//   },
-//   {
-//     id_dokter: "2",
-//     nama: "Dr. Siti Aminah",
-//     spesialisasi: "Dokter Gigi",
-//     url: "../public/placeholder.svg",
-//     jadwal: ["10:00 - 12:00", "14:00 - 17:00"],
-//   },
-//   {
-//     id_dokter: "3",
-//     nama: "Dr. Budi Santoso",
-//     spesialisasi: "Dokter Spesialis Anak",
-//     url: "../public/placeholder.svg",
-//     jadwal: [
-//       "08:00 - 11:00",
-//       "09:00 - 12:00",
-//       "10:00 - 13:00",
-//       "08:00 - 11:00",
-//       "09:00 - 12:00",
-//       "10:00 - 13:00",
-//     ],
-//   },
-//   {
-//     id_dokter: "3",
-//     nama: "Dr. Budi Santoso",
-//     spesialisasi: "Dokter Spesialis Anak",
-//     url: "../public/placeholder.svg",
-//     jadwal: ["08:00 - 11:00", "09:00 - 12:00", "10:00 - 13:00"],
-//   },
-// ];
-
 export default function DokterPage() {
-  // const data = await fetch("http://localhost:5000/api/pegawai/dokter");
-  // const jadwal = await data.json();
   const [jadwal, setJadwal] = useState<CardDokterProps[]>([]);
+  const [jadwalFiltered, setJadwalFiltered] = useState<CardDokterProps[]>([]);
 
   useEffect(() => {
     const getData = async () => {
       AxiosInstance.get("/api/jadwal-praktik").then((response) => {
-        console.log(response);
         setJadwal(response.data);
+        setJadwalFiltered(response.data);
       });
     };
 
     getData();
   }, []);
-  // console.log(jadwal);
 
-  // const [filter, setFilter] = useState<string>("");
-  // const [data, setData] = useState<CardDokterProps[]>();
+  const nameFilterHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const filterValue = e.target.value;
+
+    const newJadwal = jadwal.filter((item) =>
+      item.nama.toLowerCase().includes(filterValue.toLowerCase()),
+    );
+
+    setJadwalFiltered(newJadwal);
+  };
 
   return (
     <>
@@ -100,14 +64,13 @@ export default function DokterPage() {
             type="text"
             className="max-w-96 text-primaryCol"
             isClearable
-            // onClear={() => setFilter("")}
-            // value={filter}
-            // onChange={(e) => setFilter(e.target.value)}
+            onClear={() => setJadwalFiltered(jadwal)}
+            onChange={nameFilterHandler}
           />
           <h4 className="text-primaryCol">Search By Filter</h4>
         </div>
         <div className="grid grid-cols-2 gap-10 py-10">
-          {jadwal.map((item: CardDokterProps, index: number) => {
+          {jadwalFiltered.map((item: CardDokterProps, index: number) => {
             if (item.jadwal.length > 0)
               return <CardDokter {...item} key={index} />;
           })}
