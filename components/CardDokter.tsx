@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button, Link } from "@nextui-org/react";
 import { useDayName } from "@/utils/useDayName";
+import Placeholder from "@/public/placeholder-profile.png";
 
 export type CardDokterProps = {
   id_pegawai: number;
@@ -25,7 +26,7 @@ export default function CardDokter(props: CardDokterProps) {
     <div className="flex flex-col justify-between rounded-md px-10 py-6 shadow-md">
       <div className="flex flex-row gap-4 py-5">
         <Image
-          src={props.url}
+          src={Placeholder}
           alt={props.nama}
           width={40}
           height={40}
