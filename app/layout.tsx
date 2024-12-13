@@ -24,7 +24,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <NextUIProvider>
             <NavbarWrapper />
-            {children}
+            <div className="min-h-[calc(100vh-130px)]">{children}</div>
             <Footer />
           </NextUIProvider>
         </AppRouterCacheProvider>
