@@ -90,7 +90,7 @@ export default function NavbarComponent() {
           <NavbarItem
             as={Link}
             className="mx-2 box-border border-black hover:border-b-3 hover:font-normal hover:text-black"
-            href={"/riwayat"}
+            href={"/pendaftaran"}
           >
             Pendaftaran dan Riwayat
           </NavbarItem>
