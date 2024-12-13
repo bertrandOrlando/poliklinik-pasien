@@ -57,7 +57,7 @@ export default function DetailPendaftaranPage({
         setIsLoggedIn(false);
       }
     } else {
-      router.push("/login");
+      router.push("/masuk");
     }
   }, []);
 

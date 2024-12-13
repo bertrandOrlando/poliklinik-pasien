@@ -34,7 +34,7 @@ export default function DetailDokterPage({
     e.preventDefault();
     if (idJanjiTemu) {
       if (!isLoggedIn) {
-        router.push("/daftar");
+        router.push("/masuk");
       }
 
       AxiosInstance.post("/api/pendaftaran/online", {

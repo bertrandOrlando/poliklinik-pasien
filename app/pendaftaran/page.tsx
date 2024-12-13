@@ -42,7 +42,7 @@ export default function DaftarPendaftaranPage() {
         setIsLoggedIn(false);
       }
     } else {
-      router.push("/login");
+      router.push("/masuk");
     }
   }, []);
 
