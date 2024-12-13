@@ -5,9 +5,12 @@ import { pendaftaranType } from "@/types/PendaftaranType";
 import AxiosInstance from "@/utils/AxiosInstance";
 import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DaftarPendaftaranPage() {
+  const router = useRouter();
+
   const [janjiTemu, setJanjiTemu] = useState<pendaftaranType[]>([]);
 
   const [userRole, setUserRole] = useState<string>();
@@ -38,6 +41,8 @@ export default function DaftarPendaftaranPage() {
         console.error("Invalid token:", error);
         setIsLoggedIn(false);
       }
+    } else {
+      router.push("/login");
     }
   }, []);
 

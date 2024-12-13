@@ -56,26 +56,30 @@ export default function DetailPendaftaranPage({
         console.error("Invalid token:", error);
         setIsLoggedIn(false);
       }
+    } else {
+      router.push("/login");
     }
   }, []);
 
-  if (pendaftaran != null)
-    return (
-      <main className="container mx-auto px-20 py-6">
-        <div className="flex items-center justify-between border-b-2 border-gray-300 pb-2">
-          <button
-            onClick={() => {
-              router.back();
-            }}
-            className="text-[#757575] hover:underline"
-          >
-            &larr; Kembali
-          </button>
+  return (
+    <main className="container mx-auto px-20 py-6">
+      <div className="flex items-center justify-between border-b-2 border-gray-300 pb-2">
+        <button
+          onClick={() => {
+            router.back();
+          }}
+          className="text-[#757575] hover:underline"
+        >
+          &larr; Kembali
+        </button>
+        {pendaftaran && (
           <span className="text-[#757575]">
             ID Pendaftaran: {pendaftaran.id_pendaftaran}
           </span>
-        </div>
+        )}
+      </div>
 
+      {pendaftaran && (
         <section className="mt-6 flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <h3 className="text-lg font-semibold text-gray-800">
@@ -121,6 +125,7 @@ export default function DetailPendaftaranPage({
           </div>
           <p>Terima kasih atas kepercayaan Anda. Kami tunggu kehadirannya!</p>
         </section>
-      </main>
-    );
+      )}
+    </main>
+  );
 }
