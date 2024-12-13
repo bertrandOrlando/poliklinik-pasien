@@ -76,8 +76,10 @@ export default function NavbarComponent() {
         }}
         maxWidth="xl"
       >
-        <NavbarBrand as={Link} href={"/"}>
-          <Image alt="navigation logo" src={NavLogo} />
+        <NavbarBrand>
+          <Link href={"/"}>
+            <Image alt="navigation logo" src={NavLogo} />
+          </Link>
         </NavbarBrand>
         <NavbarContent justify="end">
           <NavbarItem
