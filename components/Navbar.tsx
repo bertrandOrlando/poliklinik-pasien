@@ -85,15 +85,9 @@ export default function NavbarComponent() {
             className="mx-2 box-border border-black hover:border-b-3 hover:font-normal hover:text-black"
             href={"/dokter"}
           >
-            Lihat Dokter
+            Lihat Jadwal Dokter
           </NavbarItem>
-          <NavbarItem
-            as={Link}
-            className="mx-2 box-border border-black hover:border-b-3 hover:font-normal hover:text-black"
-            href={"/pendaftaran"}
-          >
-            Pendaftaran dan Riwayat
-          </NavbarItem>
+
           {!isLoggedIn ? (
             <>
               <NavbarItem className="hidden lg:flex">
@@ -118,40 +112,51 @@ export default function NavbarComponent() {
               </NavbarItem>
             </>
           ) : (
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  variant="solid"
-                  className="bg-primaryCol font-medium text-white"
-                >
-                  <Image
-                    src={ProfileIcon}
-                    width={20}
-                    height={20}
-                    alt="profile image"
-                  />
-                  {namaUser}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Dynamic Actions" items={items}>
-                {(item) => (
-                  <DropdownItem
-                    as={Link}
-                    href={item.url}
-                    key={item.key}
-                    color={item.key === "logout" ? "danger" : "default"}
-                    className={
-                      item.key === "logout" ? "text-danger" : "text-black"
-                    }
-                    onClick={
-                      item.key === "logout" ? () => handlerLogout() : undefined
-                    }
+            <>
+              <NavbarItem
+                as={Link}
+                className="mx-2 box-border border-black hover:border-b-3 hover:font-normal hover:text-black"
+                href={"/pendaftaran"}
+              >
+                Pendaftaran dan Riwayat
+              </NavbarItem>
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    variant="solid"
+                    className="bg-primaryCol font-medium text-white"
                   >
-                    {item.label}
-                  </DropdownItem>
-                )}
-              </DropdownMenu>
-            </Dropdown>
+                    <Image
+                      src={ProfileIcon}
+                      width={20}
+                      height={20}
+                      alt="profile image"
+                    />
+                    {namaUser}
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Dynamic Actions" items={items}>
+                  {(item) => (
+                    <DropdownItem
+                      as={Link}
+                      href={item.url}
+                      key={item.key}
+                      color={item.key === "logout" ? "danger" : "default"}
+                      className={
+                        item.key === "logout" ? "text-danger" : "text-black"
+                      }
+                      onClick={
+                        item.key === "logout"
+                          ? () => handlerLogout()
+                          : undefined
+                      }
+                    >
+                      {item.label}
+                    </DropdownItem>
+                  )}
+                </DropdownMenu>
+              </Dropdown>
+            </>
           )}
         </NavbarContent>
       </Navbar>
