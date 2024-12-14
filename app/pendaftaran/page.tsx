@@ -30,13 +30,13 @@ export default function DaftarPendaftaranPage() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decoded: { idpasien: string; role: string } = jwtDecode(token);
+        const decoded: { id_pasien: string; role: string } = jwtDecode(token);
 
         setUserRole(decoded.role);
-        setIdPasien(decoded.idpasien);
+        setIdPasien(decoded.id_pasien);
         setIsLoggedIn(true);
 
-        getRiwayatPendaftaranPasien(decoded.idpasien);
+        getRiwayatPendaftaranPasien(decoded.id_pasien);
       } catch (error) {
         console.error("Invalid token:", error);
         setIsLoggedIn(false);
