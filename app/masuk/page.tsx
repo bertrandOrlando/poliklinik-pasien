@@ -180,7 +180,7 @@ export default function LoginPage() {
     </>
   );
 }
-const EyeSlashFilledIcon = (props: SVGProps<SVGSVGElement>) => {
+export const EyeSlashFilledIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"
@@ -216,7 +216,7 @@ const EyeSlashFilledIcon = (props: SVGProps<SVGSVGElement>) => {
   );
 };
 
-const EyeFilledIcon = (props: SVGProps<SVGSVGElement>) => {
+export const EyeFilledIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       aria-hidden="true"
