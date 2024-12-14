@@ -53,6 +53,7 @@ export default function NavbarComponent() {
 
   const handlerLogout = () => {
     localStorage.removeItem("token");
+    window.location.href = "/";
   };
 
   return (
