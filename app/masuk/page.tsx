@@ -66,7 +66,7 @@ export default function LoginPage() {
         .then((response) => {
           if (response.status === 200) {
             localStorage.setItem("token", response.data.token);
-            router.push("/");
+            window.location.href = "/";
           }
         })
         .catch((err) => {
