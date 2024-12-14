@@ -35,17 +35,17 @@ export default function DetailDokterPage({
     if (idJanjiTemu) {
       if (!isLoggedIn) {
         router.push("/daftar");
+      } else {
+        AxiosInstance.post("/api/pendaftaran/online", {
+          id_pasien: idPasien,
+          id_jadwal: idJanjiTemu,
+        }).then((response) => {
+          if (response.status === 200) {
+            const id_pendaftaran = response.data["id_pendaftaran"];
+            router.push("/pendaftaran/" + id_pendaftaran);
+          }
+        });
       }
-
-      AxiosInstance.post("/api/pendaftaran/online", {
-        id_pasien: idPasien,
-        id_jadwal: idJanjiTemu,
-      }).then((response) => {
-        if (response.status === 200) {
-          const id_pendaftaran = response.data["id_pendaftaran"];
-          router.push("/pendaftaran/" + id_pendaftaran);
-        }
-      });
     }
   };
 
