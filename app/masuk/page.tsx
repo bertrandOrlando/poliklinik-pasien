@@ -89,17 +89,18 @@ export default function LoginPage() {
 
   return (
     <>
-      <section className="flex flex-col md:flex-row">
-        <div className="top-0 h-screen w-full flex-1">
+      <section className="flex min-h-[calc(100vh-130px)] flex-col md:flex-row">
+        <div className="top-0 w-1/2 flex-1">
           <Image
             src={Background}
             alt="Image Tempat Administrasi"
-            className="h-full w-auto object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
 
         <div className="flex w-1/2 flex-col items-center justify-evenly">
-          <Image src={LogoVida} alt="Logo Vida" className="h[40%] w-[40%]" />
+          {/* <Image src={LogoVida} alt="Logo Vida" className="h[40%] w-[40%]" /> */}
+          <h2 className="text-3xl font-semibold text-primaryCol">Masuk Akun</h2>
 
           <div className="h-auto w-full max-w-md">
             <form
