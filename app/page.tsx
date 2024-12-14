@@ -32,10 +32,10 @@ export default function Home() {
               terstandarisasi
             </p>
             <Link
-              href="/daftar"
-              className="inline-block rounded-lg bg-primaryCol px-8 py-3 text-white transition hover:bg-secondaryCol"
+              href="/dokter"
+              className="inline-block rounded-lg bg-primaryCol px-8 py-3 font-medium text-white transition hover:bg-secondaryCol"
             >
-              Daftar Sekarang
+              Buat Janji Temu
             </Link>
           </div>
         </div>
