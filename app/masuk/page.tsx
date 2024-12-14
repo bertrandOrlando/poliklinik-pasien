@@ -94,7 +94,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <section className="flex min-h-[calc(100vh-130px)] flex-col md:flex-row">
+      <section className="flex min-h-[calc(100vh-130px)]">
         <div className="top-0 w-1/2 flex-1">
           <Image
             src={Background}
