@@ -4,6 +4,7 @@ import "./globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import NavbarWrapper from "@/components/NavbarWrapper";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,8 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <NextUIProvider>
             <NavbarWrapper />
-            {children}
+            <div className="min-h-[calc(100vh-130px)]">{children}</div>
+            <Footer />
           </NextUIProvider>
         </AppRouterCacheProvider>
       </body>

@@ -34,7 +34,7 @@ export default function DetailDokterPage({
     e.preventDefault();
     if (idJanjiTemu) {
       if (!isLoggedIn) {
-        router.push("/daftar");
+        router.push("/masuk");
       } else {
         AxiosInstance.post("/api/pendaftaran/online", {
           id_pasien: idPasien,
@@ -53,9 +53,9 @@ export default function DetailDokterPage({
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decoded: { idpasien: string; role: string } = jwtDecode(token);
+        const decoded: { id_pasien: string; role: string } = jwtDecode(token);
         setUserRole(decoded.role);
-        setIdPasien(decoded.idpasien);
+        setIdPasien(decoded.id_pasien);
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Invalid token:", error);

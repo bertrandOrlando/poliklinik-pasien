@@ -1,12 +1,9 @@
 "use client";
 
-import { Input } from "@nextui-org/react";
-import React, { useEffect, useState } from "react";
-// import SearchIcon from "@/public/SearchIcon.svg";
-import Image from "next/image";
+import { Input, Radio, RadioGroup } from "@nextui-org/react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import CardDokter, { CardDokterProps } from "@/components/CardDokter";
 
-import axios from "axios";
 import AxiosInstance from "@/utils/AxiosInstance";
 
 export const SearchIcon = (props: { className: string }) => {
@@ -30,84 +27,87 @@ export const SearchIcon = (props: { className: string }) => {
   );
 };
 
-// const jadwalDokter = [
-//   {
-//     id_dokter: "1",
-//     nama: "Dr. Andi Susanto",
-//     spesialisasi: "Dokter Umum",
-//     url: "../public/placeholder.svg",
-//     jadwal: ["09:00 - 12:00", "13:00 - 16:00", "10:00 - 14:00"],
-//   },
-//   {
-//     id_dokter: "2",
-//     nama: "Dr. Siti Aminah",
-//     spesialisasi: "Dokter Gigi",
-//     url: "../public/placeholder.svg",
-//     jadwal: ["10:00 - 12:00", "14:00 - 17:00"],
-//   },
-//   {
-//     id_dokter: "3",
-//     nama: "Dr. Budi Santoso",
-//     spesialisasi: "Dokter Spesialis Anak",
-//     url: "../public/placeholder.svg",
-//     jadwal: [
-//       "08:00 - 11:00",
-//       "09:00 - 12:00",
-//       "10:00 - 13:00",
-//       "08:00 - 11:00",
-//       "09:00 - 12:00",
-//       "10:00 - 13:00",
-//     ],
-//   },
-//   {
-//     id_dokter: "3",
-//     nama: "Dr. Budi Santoso",
-//     spesialisasi: "Dokter Spesialis Anak",
-//     url: "../public/placeholder.svg",
-//     jadwal: ["08:00 - 11:00", "09:00 - 12:00", "10:00 - 13:00"],
-//   },
-// ];
-
 export default function DokterPage() {
-  // const data = await fetch("http://localhost:5000/api/pegawai/dokter");
-  // const jadwal = await data.json();
+  const [filterText, setFilterText] = useState<string>("");
+  const [filterType, setFilterType] = useState<string>("nama");
   const [jadwal, setJadwal] = useState<CardDokterProps[]>([]);
+  const [jadwalFiltered, setJadwalFiltered] = useState<CardDokterProps[]>([]);
 
   useEffect(() => {
     const getData = async () => {
       AxiosInstance.get("/api/jadwal-praktik").then((response) => {
-        console.log(response);
         setJadwal(response.data);
+        setJadwalFiltered(response.data);
       });
     };
 
     getData();
   }, []);
-  // console.log(jadwal);
 
-  // const [filter, setFilter] = useState<string>("");
-  // const [data, setData] = useState<CardDokterProps[]>();
+  useEffect(() => {
+    jadwalFilterHandler(filterText);
+  }, [filterText, filterType]);
+
+  const jadwalFilterHandler = (filterValue: string) => {
+    console.log(filterType);
+    switch (filterType) {
+      case "nama":
+        {
+          const newJadwal = jadwal.filter((item) =>
+            item.nama.toLowerCase().includes(filterValue.toLowerCase()),
+          );
+          setJadwalFiltered(newJadwal);
+        }
+        break;
+      case "spesialisasi":
+        {
+          const newJadwal = jadwal.filter((item) =>
+            item.nama_spesialisasi
+              .toLowerCase()
+              .includes(filterValue.toLowerCase()),
+          );
+          setJadwalFiltered(newJadwal);
+        }
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
       <div className="px-32 py-10">
-        <div className="flex flex-row items-center gap-3">
+        <h4 className="my-6 text-center text-3xl font-bold text-primaryCol">
+          List Dokter
+        </h4>
+        <div className="flex flex-col gap-3">
           <Input
-            placeholder="Ketik nama dokter atau gunakan filter"
+            placeholder="Ketik nama dokter atau spesialisasi"
             startContent={
               <SearchIcon className="pointer-events-none flex-shrink-0 text-2xl text-default-400" />
             }
             type="text"
             className="max-w-96 text-primaryCol"
             isClearable
-            // onClear={() => setFilter("")}
-            // value={filter}
-            // onChange={(e) => setFilter(e.target.value)}
+            onClear={() => setFilterText("")}
+            value={filterText}
+            onChange={(e) => {
+              setFilterText(e.target.value);
+            }}
           />
-          <h4 className="text-primaryCol">Search By Filter</h4>
+          <RadioGroup
+            label="Filter Berdasarkan :"
+            className="flex flex-row"
+            size="md"
+            value={filterType}
+            onValueChange={setFilterType}
+          >
+            <Radio value="nama">Nama Dokter</Radio>
+            <Radio value="spesialisasi">Spesialisasi</Radio>
+          </RadioGroup>
         </div>
         <div className="grid grid-cols-2 gap-10 py-10">
-          {jadwal.map((item: CardDokterProps, index: number) => {
+          {jadwalFiltered.map((item: CardDokterProps, index: number) => {
             if (item.jadwal.length > 0)
               return <CardDokter {...item} key={index} />;
           })}
