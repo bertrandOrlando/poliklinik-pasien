@@ -26,6 +26,7 @@ export default function LoginPage() {
 
   const [values, setValues] = useState<FormValues>({ email: "", password: "" });
   const [errors, setErrors] = useState<string>("");
+  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
 
   const validateEmail = (value: string) =>
     value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
@@ -56,6 +57,8 @@ export default function LoginPage() {
     setErrors("");
 
     try {
+      setIsSubmiting(true);
+
       AxiosInstance.post("/api/pasien/login", {
         email: values.email,
         password: values.password,
@@ -72,6 +75,8 @@ export default function LoginPage() {
     } catch (error) {
       setErrors("Something went wrong");
       console.error("Authentication error", error);
+    } finally {
+      setIsSubmiting(false);
     }
   };
 
@@ -149,8 +154,9 @@ export default function LoginPage() {
               </div>
               <div>
                 <button
-                  className="w-full rounded-full bg-primaryCol px-4 py-2 font-medium text-white transition hover:bg-secondaryCol focus:outline-none"
+                  className={`w-full rounded-full px-4 py-2 font-medium text-white transition focus:outline-none ${isSubmiting ? "cursor-default bg-slate-600" : "bg-primaryCol hover:bg-secondaryCol"}`}
                   type="submit"
+                  disabled={isSubmiting}
                 >
                   Masuk
                 </button>
