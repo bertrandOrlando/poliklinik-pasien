@@ -5,4 +5,5 @@ export type JadwalPraktikType = {
   kuota: number;
   no_ruang: string;
   start_time: string;
+  sisa_kuota: number;
 };
