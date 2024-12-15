@@ -30,21 +30,36 @@ export default function DetailDokterPage({
 
   const timeFormatter = useTimeFormatter();
 
-  const submitHandler = (e: FormEvent<HTMLButtonElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [errorSubmit, setErrorSubmit] = useState<string>("");
+
+  const submitHandler = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log("Menambah Janji Temu ");
     if (idJanjiTemu) {
       if (!isLoggedIn) {
         router.push("/masuk");
       } else {
-        AxiosInstance.post("/api/pendaftaran/online", {
-          id_pasien: idPasien,
-          id_jadwal: idJanjiTemu,
-        }).then((response) => {
-          if (response.status === 200) {
-            const id_pendaftaran = response.data["id_pendaftaran"];
-            router.push("/pendaftaran/" + id_pendaftaran);
-          }
-        });
+        try {
+          setIsSubmitting(true);
+
+          await AxiosInstance.post("/api/pendaftaran/online", {
+            id_pasien: idPasien,
+            id_jadwal: idJanjiTemu,
+          }).then((response) => {
+            if (response.status === 200) {
+              const id_pendaftaran = response.data["id_pendaftaran"];
+              router.push("/pendaftaran/" + id_pendaftaran);
+            } else {
+              setErrorSubmit("Gagal melakukan pendaftaran dokter");
+              setIsSubmitting(false);
+            }
+          });
+        } catch (error) {
+          setErrorSubmit("Gagal melakukan pendaftaran dokter");
+          console.error(error);
+          setIsSubmitting(false);
+        }
       }
     }
   };
@@ -66,6 +81,7 @@ export default function DetailDokterPage({
     const getDetailDokter = async () => {
       AxiosInstance.get(`/api/jadwal-praktik/${id_dokter}`).then((response) => {
         setDokter(response.data);
+        console.log(response.data);
       });
     };
 
@@ -134,17 +150,21 @@ export default function DetailDokterPage({
                 .map((jadwal, indexJadwal) => {
                   return (
                     <button
-                      className={`rounded-lg px-4 py-2 ${idJanjiTemu === jadwal.id_jadwal ? "bg-primaryCol text-white" : "bg-gray-200 text-gray-700 hover:bg-primaryCol hover:text-white"}`}
+                      className={`rounded-lg px-4 py-2 ${idJanjiTemu === jadwal.id_jadwal ? "bg-primaryCol text-white" : `${jadwal.sisa_kuota <= 0 ? "bg-gray-400 text-gray-700" : "bg-gray-200 text-gray-700 hover:bg-primaryCol hover:text-white"} `}`}
                       value={jadwal.id_jadwal}
                       onClick={() => {
                         setIdJanjiTemu(jadwal.id_jadwal);
                       }}
                       key={indexJadwal}
+                      disabled={jadwal.sisa_kuota <= 0}
                     >
                       {timeFormatter.formatTime(
                         jadwal.start_time,
                         jadwal.end_time,
                       )}
+                      <br />
+                      Sisa kuota:{" "}
+                      {jadwal.sisa_kuota > 0 ? jadwal.sisa_kuota : 0}
                     </button>
                   );
                 })}
@@ -167,8 +187,8 @@ export default function DetailDokterPage({
 
             <button
               type="submit"
-              className={`w-full rounded-lg px-4 py-2 ${idJanjiTemu ? "bg-primaryCol text-white hover:bg-secondaryCol" : "bg-tertiaryCol"}`}
-              disabled={!idJanjiTemu}
+              className={`w-full rounded-lg px-4 py-2 ${!idJanjiTemu || isSubmitting ? "bg-tertiaryCol" : "bg-primaryCol text-white hover:bg-secondaryCol"}`}
+              disabled={!idJanjiTemu || isSubmitting}
               onClick={submitHandler}
             >
               Buat Janji Temu
