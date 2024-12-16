@@ -108,8 +108,8 @@ export default function DokterPage() {
         </div>
         <div className="grid grid-cols-2 gap-10 py-10">
           {jadwalFiltered.map((item: CardDokterProps, index: number) => {
-            if (item.jadwal.length > 0)
-              return <CardDokter {...item} key={index} />;
+            // if (item.jadwal.length > 0)
+            return <CardDokter {...item} key={index} />;
           })}
         </div>
       </div>
