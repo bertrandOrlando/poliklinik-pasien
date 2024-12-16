@@ -11,7 +11,7 @@ import Image from "next/image";
 import Placeholder from "@/public/placeholder-profile.png";
 import { pendaftaranType } from "@/types/PendaftaranType";
 import { useDateFormatter } from "@/utils/useDateFormatter";
-
+import QRCode from "react-qr-code";
 export default function DetailPendaftaranPage({
   params,
 }: {
@@ -123,6 +123,13 @@ export default function DetailPendaftaranPage({
               </li>
             </ul>
           </div>
+          <QRCode
+            size={256}
+            style={{ height: "auto", maxWidth: "150px", width: "150px" }}
+            value={`http://localhost:3000/daftar-ulang/${id_pendaftaran}`}
+            viewBox={`0 0 256 256`}
+          />
+
           <p>Terima kasih atas kepercayaan Anda. Kami tunggu kehadirannya!</p>
         </section>
       )}
