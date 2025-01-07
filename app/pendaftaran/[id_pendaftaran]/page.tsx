@@ -98,9 +98,11 @@ export default function DetailPendaftaranPage({
             />
             <div>
               <h2 className="font-semibold text-gray-800">
-                dr. Alvin H Hardjawinata, MARS, SpAk
+                {pendaftaran.nama_dokter}
               </h2>
-              <p className="text-gray-600">Spesialis Jantung</p>
+              <p className="text-gray-600">
+                Spesialis {pendaftaran.nama_spesialisasi}
+              </p>
             </div>
           </div>
           <div className="ml-6">
@@ -126,7 +128,7 @@ export default function DetailPendaftaranPage({
           <QRCode
             size={256}
             style={{ height: "auto", maxWidth: "150px", width: "150px" }}
-            value={`http://localhost:3000/daftar-ulang/${id_pendaftaran}`}
+            value={`http://localhost:3001/daftar-ulang/qr/${id_pendaftaran}`}
             viewBox={`0 0 256 256`}
           />
 

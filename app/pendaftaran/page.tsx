@@ -18,7 +18,7 @@ export default function DaftarPendaftaranPage() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const today = new Date();
-  today.setHours(0, 0, 1, 1);
+  today.setHours(0, 0, 0, 0);
 
   useEffect(() => {
     const getRiwayatPendaftaranPasien = async (id: string) => {
@@ -62,7 +62,7 @@ export default function DaftarPendaftaranPage() {
           {janjiTemu
             .filter((item) => {
               const tanggalDaftar = new Date(item.tanggal_daftar);
-              return tanggalDaftar >= today;
+              return tanggalDaftar >= today && item.status == "pendaftaran";
             })
             .map((item, index) => (
               <CardPendaftaran key={index} {...item} />
